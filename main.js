@@ -13,8 +13,8 @@ var economics = [
 ];
 
 var sexes = [
-  'male'
-, 'female'
+  ['female', 1]
+, ['male', 2]
 ];
 
 var environment = [
@@ -55,6 +55,32 @@ var death = [
 , ['fireworks discharge', 615488, true ]
 ];
 
+var LifeEvent = function(event, statistics) {
+  this.event = event;
+  this.statistics = statistics;
+  this.outcome = '';
+  this.killed = false;
+};
+
+LifeEvent.prototype.getOutcome = function() {
+  var outcome = '';
+  _.eachRight(this.statistics, _.bind(function(cause, i) {
+    if(_.random(1,cause[1]) == 1) {
+      this.outcome = cause[0];
+      this.event = this.event.replace('{outcome}','<span class="highlight">'+ this.outcome +'</span>')
+      if(cause[2]) this.killed = true;
+
+      return false;
+    }
+  }, this));
+};
+
+LifeEvent.prototype.render = function() {
+  $('.content').append('<p>' + this.event + '</p>');
+};
+
+var lifeEvents= [];
+
 var index, isGameOver = false;
 
 $(document).ready(function() {
@@ -67,16 +93,17 @@ function startGame() {
   index = 0;
   isGameOver = false;
 
+  lifeEvents = [
+    new LifeEvent('You are a fertilized human egg.', null)
+  , new LifeEvent('Your chromosomes develop. You are now {outcome}.', sexes)
+  , new LifeEvent('You are {outcome}.', birth)
+  , new LifeEvent('You die of {outcome}.', death)
+  ];
+
+  $('.content').find('p').remove();
+
   $('.button').removeClass('try-again').text('Take a chance?');
   $('p').removeClass('hide').removeClass('show');
-  $('.economics').html( randomInArray(economics) );
-  // $('.race').html( randomInArray(races) );
-  $('.sex').html( randomInArray(sexes) );
-  $('.environment').html( randomInArray(environment) );
-
-  $('.birth').html( getOutcome(birth) );
-
-  $('.death').html( getOutcome(death) );
 
   setTimeout(next,500);
 }
@@ -87,14 +114,19 @@ function next() {
     return;
   }
 
+  var le = lifeEvents[index];
+  le.getOutcome();
+  le.render();
+
   if(index != 0 ) $('p').eq(index - 1).addClass('hide').removeClass('show');
 
-  $('p').eq(index).addClass('show')
-
-  if( $('p').eq(index + 1).length < 1 )
-    gameOver();
-  else
+  setTimeout(function(){
+    $('p').eq(index ).addClass('show');
     index++;
+  }, 10 );
+
+  if( le.killed )
+    gameOver();
 }
 
 function gameOver() {
