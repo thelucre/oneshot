@@ -95,7 +95,7 @@ function startGame() {
 
   lifeEvents = [
     new LifeEvent('You are a fertilized human egg.', null)
-  , new LifeEvent('Your chromosomes develop. You are now {outcome}.', sexes)
+  , new LifeEvent('Your chromosomes develop. You are {outcome}.', sexes)
   , new LifeEvent('You are {outcome}.', birth)
   , new LifeEvent('You die of {outcome}.', death)
   ];
