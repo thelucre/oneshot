@@ -1,25 +1,6 @@
-// var races = [
-//   'white'
-// , 'black'
-// , 'hispanic'
-// , 'asian'
-// , 'native&nbsp;american'
-// ];
-
-var economics = [
-  'poor'
-, 'middle&nbsp;class'
-, 'rich'
-];
-
 var sexes = [
   ['female', 1]
 , ['male', 2]
-];
-
-var environment = [
-  'rural'
-, 'urban'
 ];
 
 var birth = [
@@ -136,17 +117,4 @@ function gameOver() {
 
 function randomInArray(array) {
   return array[0,_.random(array.length-1)];
-}
-
-function getOutcome(odds) {
-  var outcome = '';
-  _.eachRight(odds, function(cause, i) {
-    if(_.random(1,cause[1]) == 1) {
-      outcome = cause[0];
-      // if(cause[2]) gameOver();
-      return false
-    }
-  });
-
-  return outcome;
 }
