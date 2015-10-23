@@ -7,17 +7,63 @@ body {
 }
 
 p {
-  margin-bottom:20px;
+  margin:0px;
+  transition: all 850ms 0ms cubic-bezier(.25,.1,.25,1);
+  transform: translateY(100px);
+  position:absolute;
+  width:100%;
+  opacity: 0;
+  top:0;
+}
+
+p.show {
+  transition: all 850ms 300ms cubic-bezier(.25,.1,.25,1);
+  transform: translateY(0);
+  opacity: 1;
+}
+
+p.hide {
+  transform: translateY(-100px);
+  opacity: 0;
 }
 
 .content {
   transform: translate(-50%, -50%);
   position:absolute;
-  top: 50%;
+  top: 40%;
   left:50%;
+  width: 80%;
+  text-align: center;
 }
 
 .highlight {
   background:#e39473;
   padding:2px 4px;
+}
+
+.button {
+  font-size: 18px;
+  color: white;
+  background-color: #61c260;
+  padding:5px 20px;
+  position:absolute;
+  bottom:-150px;
+  border-radius: 2px;
+  left:50%;
+  line-height: 32px;
+  transform: translateX(-50%);
+  cursor: pointer;
+  transition: all 300ms 0ms ease-in-out;
+}
+
+.button:hover {
+  background-color: #72d171;
+}
+
+.button.try-again {
+  background-color: #7e3659;
+}
+
+.button.try-again:hover {
+  background-color: #9a3968;
 }
