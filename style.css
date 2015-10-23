@@ -1,0 +1,23 @@
+body {
+  font-family: 'PT Serif';
+  font-size:30px;
+  background: #eee;
+  color: #222;
+  line-height:150%;
+}
+
+p {
+  margin-bottom:20px;
+}
+
+.content {
+  transform: translate(-50%, -50%);
+  position:absolute;
+  top: 50%;
+  left:50%;
+}
+
+.highlight {
+  background:#e39473;
+  padding:2px 4px;
+}
